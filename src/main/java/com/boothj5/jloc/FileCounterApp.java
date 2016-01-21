@@ -21,6 +21,11 @@ public class FileCounterApp {
     }
 
     public static void main(String[] args) {
-        System.out.println("Files: 0");
+        if(args.length != 1){
+            System.out.println("Usage: java FileCounterApp directory");
+            System.exit(0);
+        }
+        int fileCount = new FileCounterApp().getFileCount(args[0]);
+        System.out.println("Files: " + fileCount);
     }
 }
