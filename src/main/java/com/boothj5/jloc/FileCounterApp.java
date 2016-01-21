@@ -5,11 +5,11 @@ import java.io.File;
 public class FileCounterApp {
 
     public int getFileCount(String path) {
-        File dir = new File(path);
-        File[] files = dir.listFiles();
+        File f = new File(path);
 
         int count = 0;
-        if(files != null) {
+        if(f.isDirectory()) {
+            File[] files = f.listFiles();
             for (File file : files) {
                 if(file.isDirectory()){
                     count += getFileCount(file.getPath());
@@ -17,6 +17,8 @@ public class FileCounterApp {
                     count++;
                 }
             }
+        } else if (f.isFile()) {
+            count ++;
         }
 
         return count;
