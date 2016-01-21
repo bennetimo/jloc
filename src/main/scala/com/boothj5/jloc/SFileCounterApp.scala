@@ -4,16 +4,6 @@ import java.io.File
 
 class SFileCounterApp extends App {
 
-  def getFileCount(path: String): Int = {
-
-    def getFileCountAcc(acc: Int, file: File): Int = {
-      if(file.isFile) acc + 1
-      else {
-        Option(file.listFiles().map(getFileCountAcc(acc, _))).map(_.sum).getOrElse(0)
-      }
-    }
-
-    getFileCountAcc(0, new File(path))
-  }
+  def getFileCount(path: String): Int = countFilesWithCondition(0, new File(path), (f: File) => 1)
 
 }
