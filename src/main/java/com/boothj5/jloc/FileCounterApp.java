@@ -9,11 +9,13 @@ public class FileCounterApp {
         File[] files = dir.listFiles();
 
         int count = 0;
-        for (File file : files) {
-            if(file.isDirectory()){
-                count += getFileCount(file.getPath());
-            } else {
-                count++;
+        if(files != null) {
+            for (File file : files) {
+                if(file.isDirectory()){
+                    count += getFileCount(file.getPath());
+                } else {
+                    count++;
+                }
             }
         }
 

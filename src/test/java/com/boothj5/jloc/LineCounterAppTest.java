@@ -1,20 +1,17 @@
 package com.boothj5.jloc;
 
-import com.boothj5.jloc.FileCounterApp;
-import com.boothj5.jloc.LineCounterApp;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URL;
 
+import static com.boothj5.jloc.TestUtil.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class LineCounterAppTest {
 
     private LineCounterApp app;
-    private final String FILECOUNT_DIR = "/filecount";
-    private final String MINIONS_DIR = "/minions";
 
     private String getResourcePath(String path) {
         URL url = getClass().getResource(path);
@@ -23,32 +20,38 @@ public class LineCounterAppTest {
 
     @Before
     public void setup() {
-        app = new FileCounterApp();
+        app = new LineCounterApp();
     }
 
     @Test
-    public void testTopLevelDirectory() {
-        assertThat(app.getFileCount(getResourcePath(FILECOUNT_DIR + "/dir1")), is(2));
+      public void testMultiLineFile() {
+        assertThat(app.getLineCount(getResourcePath(FILECOUNT_DIR + "/dir1/file1")), is(2l));
     }
 
     @Test
-    public void testNestedLeafDirectory() {
-        assertThat(app.getFileCount(getResourcePath(FILECOUNT_DIR + "/dir2/dir21/dir211")), is(1));
+    public void testSingleLineFile() {
+        assertThat(app.getLineCount(getResourcePath(FILECOUNT_DIR + "/dir1/file2")), is(1l));
+    }
+
+    @Test
+    public void testSingleDirectory() {
+        assertThat(app.getLineCount(getResourcePath(FILECOUNT_DIR + "/dir1")), is(3l));
     }
 
     @Test
     public void testNestedDirectory() {
-        assertThat(app.getFileCount(getResourcePath(FILECOUNT_DIR + "/dir2/dir21")), is(3));
+        assertThat(app.getLineCount(getResourcePath(FILECOUNT_DIR + "/dir2/dir21")), is(4l));
     }
 
     @Test
     public void testFileCountDirectory() {
-        assertThat(app.getFileCount(getResourcePath(FILECOUNT_DIR)), is(12));
+        assertThat(app.getLineCount(getResourcePath(FILECOUNT_DIR)), is(16l));
     }
 
     @Test
     public void testMinionsDirectory() {
-        assertThat(app.getFileCount(getResourcePath(MINIONS_DIR)), is(62));
+        assertThat(app.getLineCount(getResourcePath(MINIONS_DIR)), is(4044l));
     }
+
 
 }

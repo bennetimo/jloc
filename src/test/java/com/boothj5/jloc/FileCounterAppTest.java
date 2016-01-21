@@ -41,4 +41,9 @@ public class FileCounterAppTest {
         assertThat(app.getFileCount(getResourcePath(MINIONS_DIR)), is(62));
     }
 
+    @Test
+    public void testNonDirectory() {
+        assertThat(app.getFileCount(getResourcePath(FILECOUNT_DIR + "/dir1/file1")), is(0));
+    }
+
 }
