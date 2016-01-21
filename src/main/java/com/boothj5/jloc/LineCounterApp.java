@@ -40,7 +40,15 @@ public class LineCounterApp {
 
 
     public static void main(String[] args) {
-        System.out.println("Files: 0");
-        System.out.println("Lines: 0");
+        if(args.length != 1){
+            System.out.println("Usage: java LineCounterApp directory");
+            System.exit(0);
+        }
+        int fileCount = new FileCounterApp().getFileCount(args[0]);
+        long lineCount = new LineCounterApp().getLineCount(args[0]);
+
+
+        System.out.println("Files: " + fileCount);
+        System.out.println("Lines: " + lineCount);
     }
 }
