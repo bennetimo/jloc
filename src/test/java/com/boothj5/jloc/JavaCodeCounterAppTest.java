@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.net.URL;
 
-import static com.boothj5.jloc.TestUtil.FILECOUNT_DIR;
 import static com.boothj5.jloc.TestUtil.MINIONS_DIR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -25,8 +24,13 @@ public class JavaCodeCounterAppTest {
     }
 
     @Test
-      public void testCountJavaFiles() {
-        assertThat(appS.getJavaFileCount(getResourcePath(MINIONS_DIR)), is(39l));
+    public void testCountJavaFiles() {
+        assertThat(appS.getFileCount(getResourcePath(MINIONS_DIR)), is(39l));
+    }
+
+    @Test
+    public void testCountBlankLines() {
+        assertThat(appS.getBlankLinesCount(getResourcePath(MINIONS_DIR)), is(436l));
     }
 
 }
