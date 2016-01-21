@@ -11,11 +11,7 @@ public class FileCounterApp {
         if(f.isDirectory()) {
             File[] files = f.listFiles();
             for (File file : files) {
-                if(file.isDirectory()){
-                    count += getFileCount(file.getPath());
-                } else {
-                    count++;
-                }
+                count += getFileCount(file.getPath());
             }
         } else if (f.isFile()) {
             count ++;
