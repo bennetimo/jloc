@@ -7,32 +7,27 @@ import java.nio.file.Paths;
 
 public class LineCounterApp {
 
-    private long getFileLineCount(String filePath){
-        try {
-            return Files.newBufferedReader(Paths.get(filePath)).lines().count();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 0l;
-    }
-
+    /**
+     * Retrieves the number of lines across all files (recursive) in a directory
+     * @param path absolute path
+     * @return the number of lines found
+     */
     public long getLineCount(String path) {
+        File f = new File(path);
 
-        File dir = new File(path);
-        File[] files = dir.listFiles();
-
-        long count = 0;
-        if(files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    count += getLineCount(file.getPath());
-                } else {
-                    count += getFileLineCount(file.getPath());
-                }
+        long count = 0l;
+        if(f.isDirectory()){
+            for (File file : f.listFiles()) {
+                count += getLineCount(file.getPath());
             }
-        } else {
-            //Single file
-            return getFileLineCount(path);
+        } else if (f.isFile()) {
+            try {
+                return Files.newBufferedReader(Paths.get(f.getPath())).lines().count();
+            } catch (IOException e) {
+                //TODO: Add logging library
+                System.out.println("Could not include count of file: " + f.getAbsolutePath() + ", reason: " + e.getMessage());
+                return 0;
+            }
         }
 
         return count;
